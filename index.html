@@ -1,0 +1,281 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dodgeball Wars</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">FIRST-PERSON DODGEBALL</p>
+        <h1>Dodgeball Wars</h1>
+      </div>
+      <div class="profile-strip">
+        <div><span id="userNameText">Player</span><small>username</small></div>
+        <div><span id="coinCount">0</span><small>coins</small></div>
+        <div><span id="levelCount">1</span><small>level</small></div>
+        <div><span id="rankText">Unranked</span><small>rank</small></div>
+      </div>
+    </header>
+
+    <main>
+      <section id="homeScreen" class="screen active">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <div class="menu-arena" aria-hidden="true">
+              <span class="menu-ball b1"></span>
+              <span class="menu-ball b2"></span>
+              <span class="menu-ball b3"></span>
+              <span class="menu-player p1">YOU</span>
+              <span class="menu-player p2">NPC</span>
+              <span class="menu-flash"></span>
+            </div>
+            <p class="eyebrow">DODGEBALL WARS</p>
+            <h2>Enter the arena.</h2>
+            <aside class="lobby-loadout">
+              <h3>Loadout</h3>
+              <div id="selectedElementCard" class="element-card large"></div>
+              <div id="selectedBallCard" class="selected-ball-card"></div>
+            </aside>
+            <div class="menu-buttons">
+              <button id="playPageBtn" class="primary big-btn">Play</button>
+              <button id="profilePageBtn" class="ghost big-btn">Username</button>
+              <button id="elementsPageBtn" class="ghost big-btn">Elements</button>
+              <button id="ballPageBtn" class="ghost big-btn">Dodgeballs</button>
+              <button id="shopPageBtn" class="ghost big-btn">Shop</button>
+              <button id="upgradesPageBtn" class="ghost big-btn">Upgrades</button>
+              <button id="rankedPageBtn" class="ghost big-btn">Ranked</button>
+              <button id="onlinePageBtn" class="ghost big-btn">Online</button>
+              <button id="settingsPageBtn" class="ghost big-btn">Settings</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="profileScreen" class="screen page-pop">
+        <section class="panel page-card">
+          <div class="panel-title">
+            <h3>Username</h3>
+            <button class="ghost back-btn" data-page="homeScreen">Back</button>
+          </div>
+          <div class="username-grid">
+            <input id="usernameInput" type="text" maxlength="16" placeholder="Choose username">
+            <button id="saveUsernameBtn" class="primary">Save Username</button>
+          </div>
+          <div class="control-row">
+            <button id="resetBtn" class="ghost">Reset Save</button>
+          </div>
+        </section>
+      </section>
+
+      <section id="settingsScreen" class="screen page-pop">
+        <section class="panel page-card settings-panel">
+          <div class="panel-title">
+            <h3>Settings</h3>
+            <button class="ghost back-btn" data-page="homeScreen">Back</button>
+          </div>
+          <div class="settings-grid">
+            <label><span>Mouse sensitivity <b id="sensitivityValue">35</b></span><input id="sensitivitySetting" type="range" min="10" max="100" value="35"></label>
+            <label><span>Volume <b id="volumeValue">50</b></span><input id="volumeSetting" type="range" min="0" max="100" value="50"></label>
+            <label><span>Field of view <b id="fovValue">90</b></span><input id="fovSetting" type="range" min="70" max="110" value="90"></label>
+            <label><span>Graphics</span><select id="qualitySetting"><option value="high">High</option><option value="balanced">Balanced</option><option value="performance">Performance</option></select></label>
+            <label class="toggle-setting"><span>Invert vertical look</span><input id="invertYSetting" type="checkbox"></label>
+            <label class="toggle-setting"><span>Show minimap</span><input id="minimapSetting" type="checkbox" checked></label>
+          </div>
+        </section>
+      </section>
+
+      <section id="playScreen" class="screen page-pop">
+        <section class="panel page-card">
+          <div class="panel-title">
+            <h3>Play Lobby</h3>
+            <button class="ghost back-btn" data-page="homeScreen">Back</button>
+          </div>
+          <div class="menu-grid compact-menu">
+            <section>
+              <div class="panel-title">
+                <h3>Game Modes</h3>
+                <span id="modeHint">Free For All selected</span>
+              </div>
+              <div id="modeGrid" class="mode-grid"></div>
+            </section>
+            <section>
+              <div class="panel-title">
+                <h3 id="mapTitle">Map</h3>
+                <span id="mapHint">Choose a map</span>
+              </div>
+              <div id="voteGrid" class="vote-grid"></div>
+              <div id="droneInspection" class="drone-inspection" hidden>
+                <button id="closeDroneBtn" class="ghost drone-close" type="button">Back to Maps</button>
+                <div id="droneInspectionView"></div>
+              </div>
+            </section>
+          </div>
+          <div class="control-row">
+            <button id="refreshVoteBtn" class="ghost">New Maps</button>
+            <button id="startBtn" class="primary">Start Match</button>
+          </div>
+        </section>
+      </section>
+
+      <section id="elementsScreen" class="screen page-pop">
+        <section class="panel page-card">
+          <div class="panel-title">
+            <h3>Element Paths</h3>
+            <button class="ghost back-btn" data-page="homeScreen">Back</button>
+          </div>
+          <p id="pathStatus" class="page-note">Choose a path to begin</p>
+          <div id="pathGrid" class="path-grid"></div>
+        </section>
+        <section class="panel page-card">
+          <div class="panel-title">
+            <h3>Elements</h3>
+            <div class="element-tools">
+              <input id="elementSearch" type="search" placeholder="Search path elements">
+              <select id="elementTier">
+                <option value="all">All tiers</option>
+                <option value="1">Tier 1</option>
+                <option value="2">Tier 2</option>
+                <option value="3">Tier 3</option>
+                <option value="4">Tier 4</option>
+                <option value="5">Tier 5</option>
+              </select>
+            </div>
+          </div>
+          <div id="elementGrid" class="element-grid" aria-live="polite"></div>
+        </section>
+      </section>
+
+      <section id="upgradesScreen" class="screen page-pop">
+        <section class="panel page-card">
+          <div class="panel-title">
+            <h3>Permanent Upgrades</h3>
+            <button class="ghost back-btn" data-page="homeScreen">Back</button>
+          </div>
+          <div id="upgradeGrid" class="upgrade-grid"></div>
+        </section>
+      </section>
+
+      <section id="ballScreen" class="screen page-pop">
+        <section class="panel page-card armory-panel">
+          <div class="panel-title">
+            <div>
+              <h3>Dodgeball Armory</h3>
+              <p class="page-note">Higher damage means a slower fire rate.</p>
+            </div>
+            <button class="ghost back-btn" data-page="homeScreen">Back</button>
+          </div>
+          <div id="ballTypeGrid" class="ball-type-grid"></div>
+        </section>
+      </section>
+
+      <section id="shopScreen" class="screen page-pop">
+        <section class="panel page-card shop-panel">
+          <div class="panel-title">
+            <div>
+              <h3>Shop</h3>
+              <p id="shopNotice" class="page-note">Buy a skin or open a crate.</p>
+            </div>
+            <button class="ghost back-btn" data-page="homeScreen">Back</button>
+          </div>
+          <div class="shop-section-title">
+            <h3>Crates</h3>
+            <span>No duplicate skins</span>
+          </div>
+          <div id="crateGrid" class="crate-grid"></div>
+          <div class="shop-section-title">
+            <h3>Ball Skins</h3>
+            <span>Cosmetic only</span>
+          </div>
+          <div id="skinGrid" class="skin-grid"></div>
+        </section>
+      </section>
+
+      <section id="rankedScreen" class="screen page-pop">
+        <section class="panel page-card">
+          <div class="panel-title">
+            <h3>Ranked</h3>
+            <button class="ghost back-btn" data-page="homeScreen">Back</button>
+          </div>
+          <p id="rankedHomeText" class="page-note">Unlocks at level 100</p>
+          <div id="rankedGrid" class="mode-grid"></div>
+        </section>
+      </section>
+
+      <section id="onlineScreen" class="screen page-pop">
+        <section class="panel page-card online-panel">
+          <div class="panel-title">
+            <h3>Online Rooms</h3>
+            <button class="ghost back-btn" data-page="homeScreen">Back</button>
+          </div>
+          <p id="onlineStatus" class="page-note">Host or join.</p>
+          <div class="online-grid">
+            <button id="hostRoomBtn" class="primary">Host Room</button>
+            <input id="roomCodeInput" type="text" placeholder="Room code">
+            <button id="joinRoomBtn" class="ghost">Join Room</button>
+          </div>
+          <div id="onlineRoomCard" class="room-card">
+            <strong>Multiplayer code</strong>
+            <span>Not connected yet</span>
+          </div>
+        </section>
+      </section>
+
+      <section id="gameScreen" class="screen">
+        <div class="game-layout">
+          <section class="arena-wrap">
+            <div class="match-bar">
+              <button id="homeBtn" class="ghost">Home</button>
+              <div class="match-label">
+                <strong id="matchMode">Free For All</strong>
+                <span id="matchStatus">Ready</span>
+              </div>
+              <div class="round-scoreboard">
+                <div id="blueTeamNames" class="score-team blue-team">Player</div>
+                <strong id="roundScore">0 - 0</strong>
+                <div id="redTeamNames" class="score-team red-team">NPC</div>
+              </div>
+              <button id="restartBtn" class="primary">Maps</button>
+            </div>
+            <canvas id="gameCanvas" width="1500" height="920" tabindex="0" aria-label="Dodgeball Wars first-person arena"></canvas>
+            <div class="fps-hud player-hud">
+              <span class="health-label">HEALTH</span>
+              <div class="meter"><span id="hpBar"></span></div>
+              <p id="hpText">100 / 100 HP</p>
+            </div>
+            <div class="fps-hud match-hud">
+              <p id="scoreText">Hits: 0</p>
+              <p id="earnedText">Coins earned: 0</p>
+              <p id="xpText">XP earned: 0</p>
+              <p id="rankedText">Ranked unlocks at level 100.</p>
+            </div>
+            <div class="ability-dock">
+              <h3>Abilities</h3>
+              <div id="skillList" class="skill-list"></div>
+            </div>
+            <div class="combat-controls"><span><b>SHIFT</b> SPRINT</span><span><b>F + WASD</b> DIVE</span><span><b>SPACE</b> JUMP</span></div>
+            <div id="gameChat" class="game-chat">
+              <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
+              <form id="chatForm" class="chat-form">
+                <input id="chatInput" type="text" maxlength="120" placeholder="Message" autocomplete="off">
+                <button class="ghost" type="submit">Send</button>
+              </form>
+            </div>
+            <div id="resultOverlay" class="result-overlay" hidden>
+              <strong id="resultTitle">YOU HAVE BEEN DEFEATED</strong>
+              <p id="resultDamage">0 DAMAGE</p>
+              <button id="resultMapsBtn" class="primary">Maps</button>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
